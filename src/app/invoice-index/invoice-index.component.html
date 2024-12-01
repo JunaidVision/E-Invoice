@@ -1,0 +1,14 @@
+@if(service.isSideMenuCollapsed){
+  <app-sidebar></app-sidebar>
+}
+<div class="main-content" [ngClass]="{'login':!service.isSideMenuCollapsed}">
+  <app-navbar></app-navbar>
+  <div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(87deg, #f5365c 0, #172b4d 100%) !important;">
+    <div class="container-fluid">
+      <div class="header-body">
+        <!-- Card stats -->
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

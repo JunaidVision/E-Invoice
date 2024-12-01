@@ -1,0 +1,126 @@
+
+  <!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <h3 class="mb-0" style="float: left;">{{Title}}</h3>
+            <div class="card-tools px-2" style="float: right;">
+                <i class="fas fa-sync mx-2 pointer" (click)="_getPageList()"></i>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                    @for (headers of fields; track $index) {
+                    <th class="text-center">
+                        {{headers.Name}}
+                    </th>
+                    }
+                    @if (isDelete || isEdit) {
+                    <th class="addNew">
+                        Action
+                    </th>
+                    }
+
+                </tr>
+              </thead>
+              <tbody>
+                @if(gridData.length>0){
+                    @for (row of gridData | pagination: {page: pageNo , itemsPerPage: pageSize} ; track $index) {
+                    <tr class="text-center">
+                        @for (col of fields ; track $index) {
+                        <td>
+                            @if(col?.DataType == 'details'){
+                            <a class="pointer" style="color: #007bff;" (click)="gotoDetails(row)">
+                                {{row[col.Field]}}
+                            </a>
+                            }@else{
+                            {{row[col.Field]}}
+                            }
+                        </td>
+                        }
+                        @if (isDelete || isEdit) {
+                        <td class="text-right">
+                            <div ngbDropdown placement="bottom-right">
+                                <a class="btn btn-sm btn-icon-only" ngbDropdownToggle>
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </a>
+                                <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="isEdit" (click)="editData(row)">Edit</a>
+                                    <!-- <delete [nowDelete]="false" [gridData]="row" (deleteMethod)="_deleteMethod($event.data)"></delete> -->
+                                </div>
+                            </div>
+                        </td>
+                        }
+                    </tr>
+                    }
+                    }@else{
+                    No Data Found
+                    }
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer py-4">
+            <div style="float: left;">
+                <div class="btn nobtn themecolor"> Total Records :- <span class="badge badge-primary">
+                    {{gridData.length}}
+                </span> </div>
+            </div>
+            <nav aria-label="..." style="float: right;">
+              <ul class="pagination mb-0">
+                <li class="page-item"[ngClass]="{'disabled':pageNo===1}">
+                  <a class="page-link" href="javascript:void(0)" (click)="_getPaginationListData(pageNo - 1)" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                  </a>
+                </li>
+                <li class="page-item" *ngFor='let pno of counter(pageNo) ;let i = index' [ngClass]="{'active':pno==pageNo}">
+                  <a class="page-link" href="javascript:void(0)" (click)="_getPaginationListData(pno)">{{pno}}</a>
+                </li>
+                <li class="page-item" [ngClass]="{'disabled':pageNo === pageCount  || pageNo > pageCount}">
+                  <a class="page-link" href="javascript:void(0)" (click)="_getPaginationListData(pageNo + 1)">
+                    <i class="fas fa-angle-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <div ngbDropdown placement="bottom-right" style="float: right;" class="small mx-2">
+                Data Per Page : 
+                <a class="btn btn-sm btn-icon-only" ngbDropdownToggle>
+                  {{pageSize}}
+                </a>
+                <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="itemsPerPageChanged(10)">10</a>
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="itemsPerPageChanged(25)">25</a>
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="itemsPerPageChanged(50)">50</a>
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="itemsPerPageChanged(100)">100</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- @if (showqr) {
+  <div class="modal d-block" id="LocationCreate">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+         
+        <div class="modal-header">
+          <h4 class="modal-title">Location Create</h4>
+          <div>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal" (click)="closeqr()"></button>
+          </div>
+        </div>
+         
+        <div class="modal-body">
+          <qrcode class="popupqr" [qrdata]="QRdata"></qrcode>
+      </div>
+    </div>
+  </div>
+  </div>
+} -->
