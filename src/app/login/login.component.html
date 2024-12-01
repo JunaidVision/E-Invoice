@@ -32,13 +32,15 @@
                 <div class="text-muted text-center mt-2 mb-3"><small>Sign In</small></div>
               </div>
               <div class="card-body px-lg-5 py-4">
+                <h4 class="shake Error" *ngIf="loginError">{{loginError}}</h4>
                 <form role="form">
                   <div class="form-group mb-3">
                     <div class="input-group input-group-alternative">
                       <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                       </div>
-                      <input class="form-control" placeholder="Email" type="email">
+                      <input class="form-control" placeholder="User" type="text" [(ngModel)]="user.username" [ngModelOptions]="{standalone:true}" 
+                      ngDefaultControls required aria-required="true">
                     </div>
                   </div>
                   <div class="form-group">
@@ -46,7 +48,8 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                       </div>
-                      <input class="form-control" placeholder="Password" type="password">
+                      <input class="form-control" placeholder="Password" type="password"  [(ngModel)]="user.password" [ngModelOptions]="{standalone:true}" 
+                      ngDefaultControls required aria-required="true">
                     </div>
                   </div>
                   <!-- <div class="custom-control custom-control-alternative custom-checkbox">
@@ -56,7 +59,7 @@
                     </label>
                   </div> -->
                   <div class="text-center">
-                    <button type="button" class="btn btn-primary my-4" [routerLink]="['']" routerLinkActive="router-link-active" >Sign in</button>
+                    <button type="button" class="btn btn-primary my-4" (click)="Login()" >Sign in</button>
                   </div>
                 </form>
               </div>

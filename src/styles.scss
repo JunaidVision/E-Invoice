@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css");
+@import 'ngx-toastr/toastr';
+
 /* You can add global styles to this file, and also import other style files */
 /*!
 
@@ -17553,4 +17555,15 @@ ngb-datepicker .ngb-dp-months ngb-datepicker-month-view .ngb-dp-week .ngb-dp-day
     padding: 2px 4px;
     height: 40px !important;
     border-radius: 5px;
+}
+.shake {
+  -webkit-animation-name: shake;
+  animation-name: shake;
+  animation: shake 3s infinite;
+}
+.Error{
+  text-align: center;
+  background: #dc3545;
+  color: #fff;
+  border-radius: 3px;
 }

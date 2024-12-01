@@ -20,9 +20,10 @@ export class NavbarComponent implements OnInit {
     private service:Service) {
     this.location = location;
   }
-
+  UserName:string='';
   ngOnInit() {
     this.listTitles = ROUTES.filter(listTitle => listTitle);
+    this.UserName = localStorage.getItem('UserName')??'';
   }
   getTitle(){
     var titlee = this.location.prepareExternalUrl(this.location.path());
@@ -39,5 +40,10 @@ export class NavbarComponent implements OnInit {
   }
   ToggleSidebar(){
     this.service.isSideMenuCollapsed = !this.service.isSideMenuCollapsed
+  }
+  logout() {
+    localStorage.clear();
+    this.service.IsLogin = false;
+    this.router.navigate(['login']);
   }
 }

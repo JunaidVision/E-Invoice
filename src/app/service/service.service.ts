@@ -9,6 +9,7 @@ export class Service {
 
   constructor(private http: HttpClient) { }
 
+  IsLogin:boolean=false;
   isSideMenuCollapsed:boolean=false;
   onloadtable: BehaviorSubject<{ load: boolean ,gridData:any[],Page:string}> = 
   new BehaviorSubject<{load: boolean,gridData:any[],Page:string}>({ load: false , gridData:[] ,Page:'' });
@@ -19,7 +20,12 @@ export class Service {
     let url = ApiUrl.getSampleData();
     return this.http.get(url);
   }
+  Login(userdata:any): Observable<any> {
+    let url = ApiUrl.Login();
+    return this.http.post<any>(url, userdata);
+  }
 }
 export const ApiUrl ={
   getSampleData: () => `assets/json/sampledata.json`,
+  Login: () => `api/login`,
 }
