@@ -3,7 +3,7 @@
 </common-table>
 @if(Isedit){
     <div class="modal d-block" id="itemsCreate">
-        <div class="modal-dialog  modal-md">
+        <div class="modal-dialog  modal-md modal-dialog-scrollable">
             <div class="modal-content">
     
                 <div class="modal-header">
@@ -14,7 +14,7 @@
                 </div>
     
                 <div class="modal-body">
-                    @for (field of fieldsList; track $index) {
+                    @for (field of editField; track $index) {
                     <div class="container">
                         <div class="row mb-2">
                             <div class="col col-6">

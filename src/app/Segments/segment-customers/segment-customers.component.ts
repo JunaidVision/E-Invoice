@@ -16,6 +16,18 @@ export class SegmentCustomersComponent {
   constructor(private Service:Service,private toaster:ToastrService){}
   ngOnInit(): void {
     // this.getInvoices();
+    this.editdata = {
+      customerType: null,
+      streetName: null,
+      additionalStreetName: null,
+      buildingNumber: null,
+      plotIdentification: null,
+      citySubdivisionName: null,
+      cityName: null,
+      postalZone: null,
+      countrySubentity: null,
+      country: null
+    };
   }
   Data:any[]=[]
   fieldsList: any[] = [
@@ -58,7 +70,8 @@ export class SegmentCustomersComponent {
     {
         "Field": "customerInfo",
         "Name": "customerInfo"
-    },  {
+    }, 
+     {
       "Field": "customerType",
       "Name": "customerType"
   },
@@ -99,6 +112,48 @@ export class SegmentCustomersComponent {
       "Name": "country"
   }
 ];
+editField:any[]=[
+  {
+    "Field": "customerType",
+    "Name": "customerType"
+},
+{
+    "Field": "streetName",
+    "Name": "streetName"
+},
+{
+    "Field": "additionalStreetName",
+    "Name": "additionalStreetName"
+},
+{
+    "Field": "buildingNumber",
+    "Name": "buildingNumber"
+},
+{
+    "Field": "plotIdentification",
+    "Name": "plotIdentification"
+},
+{
+    "Field": "citySubdivisionName",
+    "Name": "citySubdivisionName"
+},
+{
+    "Field": "cityName",
+    "Name": "cityName"
+},
+{
+    "Field": "postalZone",
+    "Name": "postalZone"
+},
+{
+    "Field": "countrySubentity",
+    "Name": "countrySubentity"
+},
+{
+    "Field": "country",
+    "Name": "country"
+}
+]
   Searchcriteria: any = {
     Pagging: {
       PageNo: 1,
@@ -144,6 +199,7 @@ export class SegmentCustomersComponent {
     this.editdata = null;
   }
   UpdateCustomer(){
+    console.log(this.editdata)
     let UpdateData={
       customerType: this.editdata.customerType,
       streetName: this.editdata.streetName,
