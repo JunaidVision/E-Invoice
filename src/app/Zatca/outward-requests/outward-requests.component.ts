@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Service } from '../service/service.service';
-import { CommonTableComponent } from "../common-table/common-table.component";
+import { Service } from '../../service/service.service';
+import { CommonTableComponent } from "../../common-table/common-table.component";
 
 @Component({
   selector: 'OutwardRequests',
@@ -23,17 +23,24 @@ export class OutwardRequestsComponent {
     {Field:"Status",Name:"Status"},
     {Field:"Comments",Name:"Comments"},
   ];
-
-  getInvoices() {
-    this.Service.getSampleData().subscribe((res) => {
-        this.Data = res.InwardRequests;
+  Searchcriteria: any = {
+    Pagging: {
+      PageNo: 1,
+      PageSize: 10,
+    },
+    Where: [],
+    SortOrder: null,
+  };
+  getOutwardReq(criteria?:any) {
+    if(criteria){
+      this.Searchcriteria = criteria
+    }
+    this.Service.getOutwardReq(this.Searchcriteria).subscribe((res) => {
+        this.Data = res.data;
         this.Service.onloadtable.next({load:true,gridData:this.Data,Page:'OutwardRequests'});
     },
       (error) => {
         throw new Error(error);
       });
-  }
-  EditInvoices(data:any){
-    console.log(data);
   }
 }

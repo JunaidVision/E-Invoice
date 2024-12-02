@@ -7,11 +7,35 @@
     <!-- Collapse -->
     <div class="collapse navbar-collapse"  [ngbCollapse]="service.isSideMenuCollapsed" id="sidenav-collapse-main">
       <ul class="navbar-nav">
-          <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+          <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item" [ngClass]="{'active':menuItem.isActive}">
+            @if(menuItem.path != ''){
               <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
-                  <i class="ni {{menuItem.icon}}"></i>
+                  <i class="{{menuItem.icon}}"></i>
                   {{menuItem.title}}
               </a>
+            }@else if(menuItem.isparent){
+              <a href="javascript:void(0)" class="nav-link" (click)="menuItem.init=false" [ngClass]="{'collapsed':menuItem.init}" data-bs-toggle="collapse" [attr.data-bs-target]="'#'+menuItem.title">
+                <i class="{{menuItem.icon}}"></i>
+                {{menuItem.title}}
+            </a>
+            }
+            @if(menuItem.isparent && menuItem.child.length>0){
+              <ul class="navbar-nav collapse" [id]="menuItem.title">
+                <li *ngFor="let childmenuItem of menuItem.child" class="{{childmenuItem.class}} nav-item" [ngClass]="{'active':childmenuItem.isActive}">
+                  @if(childmenuItem.path != ''){
+                    <a routerLinkActive="active" [routerLink]="[childmenuItem.path]" class="nav-link">
+                        <i class="{{childmenuItem.icon}}"></i>
+                        {{childmenuItem.title}}
+                    </a>
+                  }@else {
+                    <a href="javascript:void(0)" class="nav-link">
+                      <i class="{{childmenuItem.icon}}"></i>
+                      {{childmenuItem.title}}
+                  </a>
+                  }
+                </li>
+            </ul>
+            }
           </li>
       </ul>
       <!-- Divider -->

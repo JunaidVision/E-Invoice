@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonTableComponent } from "../common-table/common-table.component";
-import { Service } from '../service/service.service';
+import { CommonTableComponent } from "../../common-table/common-table.component";
+import { Service } from '../../service/service.service';
 
 @Component({
   selector: 'ZatcaInvoices',
@@ -29,8 +29,18 @@ export class ZatcaInvoicesComponent implements OnInit{
     {Field:"QR",Name:"QR"},
     {Field:"Comments",Name:"Comments"},
   ];
-
-  getInvoices() {
+  Searchcriteria: any = {
+    Pagging: {
+      PageNo: 1,
+      PageSize: 10,
+    },
+    Where: [],
+    SortOrder: null,
+  };
+  getZatacInvoices(criteria?:any) {
+      if(criteria){
+        this.Searchcriteria = criteria
+      }
     this.Service.getSampleData().subscribe((res) => {
         this.Data = res.ZatcaInvoices;
         this.Service.onloadtable.next({load:true,gridData:this.Data,Page:'ZatcaInvoices'});
@@ -38,8 +48,5 @@ export class ZatcaInvoicesComponent implements OnInit{
       (error) => {
         throw new Error(error);
       });
-  }
-  EditInvoices(data:any){
-    console.log(data);
   }
 }

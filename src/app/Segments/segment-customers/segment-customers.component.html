@@ -1,0 +1,40 @@
+<common-table [fields]="fieldsList" [gridData]="Data" [gridId]="'SegmentCustomers'"
+ [Title]="'Segment-Customers'" [isEdit]="true" (getPageList)="getCustomers()" (editmethod)="EditCustomer($event.data)">
+</common-table>
+@if(Isedit){
+    <div class="modal d-block" id="itemsCreate">
+        <div class="modal-dialog  modal-md">
+            <div class="modal-content">
+    
+                <div class="modal-header">
+                    <h4 class="modal-title">Customer Edit</h4>
+                    <div>
+                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" (click)="Close()"></button>
+                    </div>
+                </div>
+    
+                <div class="modal-body">
+                    @for (field of fieldsList; track $index) {
+                    <div class="container">
+                        <div class="row mb-2">
+                            <div class="col col-6">
+                                <label [attr.for]="field.Field" class="form-label">{{field.Name}}</label>
+                            </div>
+                            <div class="col col-6">
+                                <input [type]="field.InputType" class="form-control" [placeholder]="field.Name"
+                                    [(ngModel)]="editdata[field.Field]">
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success" data-bs-dismiss="modal"
+                        (click)="UpdateCustomer()">Update</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="Close()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}

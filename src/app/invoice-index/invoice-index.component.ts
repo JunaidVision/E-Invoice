@@ -16,5 +16,10 @@ export class InvoiceIndexComponent implements OnInit{
 constructor(public service:Service){}
   ngOnInit(): void {
     this.service.isSideMenuCollapsed = true;
+    if((localStorage.getItem('isLogin') && localStorage.getItem('isLogin') == "true") && localStorage.getItem('Token')){
+      this.service.IsLogin = true;
+    }else{
+      this.service.IsLogin = false;
+    }
   }
 }

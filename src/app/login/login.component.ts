@@ -28,69 +28,91 @@ export class LoginComponent {
     var body = document.getElementsByTagName("body")[0];
     body.classList.remove("bg-default");
   }
-  user: any = {
+  user = {
     username: '',
-    password: ''
+    password: '',
   };
+  ShowSignUp:boolean=false;
   users:any[]=[];
   loginData:any;
-  loginError:any;
+  SignInUpError:any;
   Login(){
     if (this.user.username == '' || this.user.password == '') {
       this.toaster.warning('Please Fill The Fields');
       return
     }
 
-    this.service.getSampleData().subscribe((res) => {
-      this.users = res.Users;
+      this.service.Login(this.user) .subscribe(
+        (response) => {
+          if(!response.success){
+            this.toaster.error('Create A New Account',response.message);
+          } else if (response.success) {
+            this.loginData = response.data;
+            localStorage.setItem("UserName", this.loginData.username);
+            localStorage.setItem("Token", this.loginData.token);
+              this.afterlogin(response.data);
+          }
+          this.user = {
+            username: '',
+            password: ''
+          }
+        },
+          (error) => {
+            this.toaster.error("error", error.error.message);
+            this.SignInUpError = error.error.message;
 
-      if (this.users.find(x => x.Username === this.user.username && x.Password === this.user.password)) {
-        // this.loginData = response.data;
-        localStorage.setItem("UserName", this.user.username);
-        localStorage.setItem("Token", 'lsakljbdjcvbdnjvndjsnvbdvjb');
-        this.afterlogin(this.user);
-      }else{
-        this.loginError = 'Invalid UserName Or PassWord'
-      }
-      setTimeout(() => {
-        this.loginError = null;
-      }, 3000);
-  },
-    (error) => {
-      throw new Error(error);
-    });
-
-      // this.service.Login(this.user) .subscribe(
-      //   (response) => {
-      //     if(response.status == 'error'){
-      //       this.toaster.success('Create A New Account',response.message);
-      //     } else if (response.status == 'success') {
-      //       this.loginData = response.data;
-      //         this.globalService.setLocalStorage("UserName", response.data.user.userName);
-      //         this.globalService.setLocalStorage("Token", response.data.token);
-      //         this.afterlogin(response.data);
-
-      //     }
-      //     this.user = {
-      //       username: '',
-      //       password: ''
-      //     }
-      //   },
-      //     (error) => {
-      //       this.toaster.error("error", error.error.message);
-      //       // Swal.fire('error',error.error.message,'error');
-      //       this.loginError = error.error.message;
-
-      //       setTimeout(() => {
-      //         this.loginError = null;
-      //       }, 3000);
-      //     }
-      // );
+            setTimeout(() => {
+              this.SignInUpError = null;
+            }, 3000);
+          }
+      );
   }
   afterlogin(data: any,org?:any) {
     localStorage.setItem("isLogin", "true");
     this.service.IsLogin = true;
     this.router.navigate(['']);
+  }
+  Signupuser={
+    username: '',
+    password: '',
+    email:''
+  }
+  Register(){
+    if (this.Signupuser.username == '' || this.Signupuser.password == '' || this.Signupuser.email == '') {
+      this.toaster.warning('Please Fill The Fields');
+      return
+    }
+    if(!this.Signupuser.email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)){
+      this.SignInUpError = 'Invalid Email Id';
+      setTimeout(() => {
+        this.SignInUpError = null;
+      }, 3000);
+
+      return;
+    }
+    this.service.Register(this.Signupuser) .subscribe(
+      (response) => {
+        if(!response.success){
+          this.toaster.warning('Login error',response.message);
+          return
+        }
+        this.toaster.success('Account Created','Login Now!');
+        this.Signupuser = {
+          username: '',
+          password: '',
+          email:''
+        }
+        this.ShowSignUp = false;
+      },
+        (error) => {
+          this.toaster.error("error", error.error.message);
+          this.SignInUpError = error.error.message;
+
+          setTimeout(() => {
+            this.SignInUpError = null;
+          }, 3000);
+        }
+    );
   }
 
 

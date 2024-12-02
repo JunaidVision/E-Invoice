@@ -1,6 +1,6 @@
 
   <!-- Page content -->
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--9">
     <!-- Table -->
     <div class="row">
       <div class="col">
@@ -8,6 +8,7 @@
           <div class="card-header border-0">
             <h3 class="mb-0" style="float: left;">{{Title}}</h3>
             <div class="card-tools px-2" style="float: right;">
+              <i class="fas fa-search mx-2 pointer" (click)="toggleFilter()"></i>
                 <i class="fas fa-sync mx-2 pointer" (click)="_getPageList()"></i>
             </div>
           </div>
@@ -17,7 +18,20 @@
                 <tr>
                     @for (headers of fields; track $index) {
                     <th class="text-center">
+                      <span (click)="_getGridsorting(headers.Field)">
                         {{headers.Name}}
+                      </span>
+                        @if (isFilter) {
+                          <div class="clearfix table_filter">
+                  
+                            <input type="text" class="table_filter_text grid-search-textbox" (keyup)="getGridSearch($event)"
+                              [(ngModel)]="GridFilter[headers?.Field]" [ngModelOptions]="{standalone: true}">
+                              <span class="table_filter_clear">
+                                <i class="mx-1 fas fa-trash text-red" (click)="clearFilter(headers?.Field)"></i>
+                              </span>
+                              
+                          </div>
+                          }
                     </th>
                     }
                     @if (isDelete || isEdit) {
@@ -29,8 +43,8 @@
                 </tr>
               </thead>
               <tbody>
-                @if(gridData.length>0){
-                    @for (row of gridData | pagination: {page: pageNo , itemsPerPage: pageSize} ; track $index) {
+                @if(totalRecordCount>0){
+                    @for (row of gridData | paginate: { itemsPerPage: pageSize ,currentPage: pageNo} ; track $index) {
                     <tr class="text-center">
                         @for (col of fields ; track $index) {
                         <td>
@@ -59,7 +73,15 @@
                     </tr>
                     }
                     }@else{
-                    No Data Found
+                      <tr class="gridNoData">
+                        <td align="center"  [colSpan]="fields.length" class="text-center">
+                          <div class="gridNoData">
+                      <img src="assets/img/noData.svg" style="max-width: 100%;width: 100px;">
+                    </div>
+                      <p>No Data Found</p>
+                        </td>
+                        <!-- No Data Found -->
+                      </tr>
                     }
               </tbody>
             </table>
@@ -67,7 +89,7 @@
           <div class="card-footer py-4">
             <div style="float: left;">
                 <div class="btn nobtn themecolor"> Total Records :- <span class="badge badge-primary">
-                    {{gridData.length}}
+                    {{totalRecordCount}}
                 </span> </div>
             </div>
             <nav aria-label="..." style="float: right;">

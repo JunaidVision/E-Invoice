@@ -1360,7 +1360,7 @@ pre code {
 }
 .table th,
 .table td {
-  padding: 1rem;
+  padding: 0.5rem;
   vertical-align: top;
   border-top: 1px solid #e9ecef;
 }
@@ -15409,7 +15409,7 @@ textarea[resize=horizontal] {
   border-left: 2px solid #5e72e4;
 }
 .navbar-vertical .navbar-nav .nav-link > i {
-  min-width: 2.25rem;
+  min-width: 1.25rem;
   font-size: 0.9375rem;
   line-height: 1.5rem;
 }
@@ -15462,6 +15462,8 @@ textarea[resize=horizontal] {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   overflow-y: auto;
+  overflow: hidden;
+
 }
 .navbar-vertical.navbar-expand-xs > [class*=container] {
   flex-direction: column;
@@ -15552,6 +15554,7 @@ textarea[resize=horizontal] {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     overflow-y: auto;
+    overflow: hidden;
   }
   .navbar-vertical.navbar-expand-sm > [class*=container] {
     flex-direction: column;
@@ -15663,6 +15666,7 @@ textarea[resize=horizontal] {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     overflow-y: auto;
+    overflow: hidden;
   }
   .navbar-vertical.navbar-expand-md > [class*=container] {
     flex-direction: column;
@@ -15774,6 +15778,8 @@ textarea[resize=horizontal] {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     overflow-y: auto;
+    overflow: hidden;
+
   }
   .navbar-vertical.navbar-expand-lg > [class*=container] {
     flex-direction: column;
@@ -15885,6 +15891,8 @@ textarea[resize=horizontal] {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     overflow-y: auto;
+    overflow: hidden;
+
   }
   .navbar-vertical.navbar-expand-xl > [class*=container] {
     flex-direction: column;
@@ -16628,8 +16636,8 @@ textarea[resize=horizontal] {
   }
 }
 .table thead th {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-top: 0.50rem;
+  padding-bottom: 0.50rem;
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -16686,8 +16694,8 @@ textarea[resize=horizontal] {
 }
 .card .table td,
 .card .table th {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1.0rem;
+  padding-right: 1.0rem;
 }
 p {
   font-size: 1rem;
@@ -17566,4 +17574,54 @@ ngb-datepicker .ngb-dp-months ngb-datepicker-month-view .ngb-dp-week .ngb-dp-day
   background: #dc3545;
   color: #fff;
   border-radius: 3px;
+}
+.navbar-nav{
+  ul.navbar-nav{
+    padding-left: 2.75rem;
+  }
+  a.nav-link:not(.collapsed){
+    i.fas.fa-angle-down{
+      transform: rotate(0deg);
+    }
+  }
+  a.nav-link.collapsed{
+    i.fas.fa-angle-down{
+      transform: rotate(270deg) !important;
+    }
+  }
+  a i.fas.fa-angle-down {
+    min-width: auto !important;
+    margin-right: 10px;
+    transform: rotate(270deg);
+  }
+}
+.table_filter {
+  text-wrap: nowrap;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+table>thead .sorting:before,table>thead .sorting_asc:before,table>thead .sorting_desc:before,table>thead .sorting_asc_disabled:before,table>thead .sorting_desc_disabled:before {
+  right: 1em;
+  content: "\2191"
+}
+
+table>thead .sorting_asc:before,table>thead .sorting_desc:after {
+  opacity: 1
+}
+
+table>thead .sorting:after,table>thead .sorting_asc:after,table>thead .sorting_desc:after,table>thead .sorting_asc_disabled:after,table>thead .sorting_desc_disabled:after {
+  right: .5em;
+  content: "\2193"
+}
+tr.gridNoData:hover,tr.gridNoData:hover>td{
+  background-color: transparent !important;
+}
+.gridNoData img{
+  max-width: 100%;
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 5px;
 }

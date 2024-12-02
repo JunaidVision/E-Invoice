@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CommonTableComponent } from "../common-table/common-table.component";
-import { Service } from '../service/service.service';
+import { CommonTableComponent } from "../../common-table/common-table.component";
+import { Service } from '../../service/service.service';
 
 @Component({
   selector: 'InwardRequests',
@@ -29,18 +29,25 @@ export class InwardRequestsComponent {
     {Field:"OriginalICV",Name:"Original ICV"},
     {Field:"Comments",Name:"Comments"},
   ];
-
-  getInvoices() {
-    this.Service.getSampleData().subscribe((res) => {
-        this.Data = res.InwardRequests;
+  Searchcriteria: any = {
+    Pagging: {
+      PageNo: 1,
+      PageSize: 10,
+    },
+    Where: [],
+    SortOrder: null,
+  };
+  getInwardReq(criteria?:any) {
+        if(criteria){
+      this.Searchcriteria = criteria
+    }
+    this.Service.getInwardReq(this.Searchcriteria).subscribe((res) => {
+        this.Data = res.data;
         this.Service.onloadtable.next({load:true,gridData:this.Data,Page:'InwardRequests'});
 
     },
       (error) => {
         throw new Error(error);
       });
-  }
-  EditInvoices(data:any){
-    console.log(data);
   }
 }
